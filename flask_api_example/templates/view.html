@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>E-commerce </title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+            header {
+                background: #007BFF;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+            }
+            nav ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            nav ul li {
+                display: inline;
+                margin: 0 15px;
+            }
+            nav ul li a {
+                color: #FFFFFF; /* Default link color */
+            }
+            nav ul li a.home {
+                color: #FF0000; /* Red color for Home */
+            }
+            nav ul li a.about {
+                color: #00FF00; /* Green color for About */
+            }
+            nav ul li a.contact {
+                color: #0000FF; /* Blue color for Contact */
+            }
+            section {
+                padding: 20px;
+                display: none; /* Hide all sections by default */
+            }
+            section.active {
+                display: block; /* Show the active section */
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Welcome to My Flask Website</h1>
+            <nav>
+                <ul>
+                    <li><a href="/" onclick="showSection('home')">Home</a></li>
+                    <li><a href="/" onclick="showSection('about')">About</a></li>
+                    <li><a href="/" onclick="showSection('contact')">Contact</a></li>
+                    <li><a href="{{ url_for('item') }}">Add item</a></li>
+                    <li><a href="{{ url_for('view') }}">View Item</a></li>
+                </ul>
+            </nav>
+        </header>
+    
+    <div class="container">
+        <h1 class="mt-5">Items List</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Tag</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.category }}</td>
+                    <td>₹ {{ item.price }}</td>
+                    <td>{{ item.tag }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center">No items found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <p>&copy; 2025 My Flask Website. All rights reserved.</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,115 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables for colors */
+:root {
+    --primary-color: #007BFF;
+    --secondary-color: #00C6FF;
+    --hover-color: #FFD700;
+    --background-color: #f4f4f4;
+    --text-color: #333;
+}
+
+/* Body styles */
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 1rem; /* Base size */
+}
+
+/* Header styles */
+header {
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+}
+
+header h1 {
+    margin-bottom: 10px;
+    font-size: 2.5rem; /* Responsive font size */
+}
+
+/* Navigation styles */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s, transform 0.3s; /* Added transition for transform */
+}
+
+nav ul li a:hover {
+    color: var(--hover-color); /* Gold color on hover */
+    transform: scale(1.05); /* Slightly enlarge the link */
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+    max-width: 800px;
+    margin: 20px auto;
+    background: white;
+    border-radius: 12px; /* Slightly larger radius */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Softer shadow */
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+section h2 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+section p {
+    margin-bottom: 10px;
+}
+
+/* List styles */
+ul {
+    margin-left: 20px;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+/* Footer styles */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: var(--primary-color);
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 2em; /* Adjusted for smaller screens */
+    }
+
+    nav ul li {
+        display: block; /* Stack navigation items */
+        margin: 10px 0;
+    }
+}

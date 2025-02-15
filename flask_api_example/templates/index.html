@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>E-commerce </title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #FFFFFF; /* Default link color */
+        }
+        nav ul li a.home {
+            color: #FF0000; /* Red color for Home */
+        }
+        nav ul li a.about {
+            color: #00FF00; /* Green color for About */
+        }
+        nav ul li a.contact {
+            color: #0000FF; /* Blue color for Contact */
+        }
+        section {
+            padding: 20px;
+            display: none; /* Hide all sections by default */
+        }
+        section.active {
+            display: block; /* Show the active section */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Flask Website</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="{{ url_for('item') }}">Add item</a></li>
+                <li><a href="{{ url_for('view') }}">View Item</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="active">
+            <h2>Home</h2>
+            <p>This is a simple website built with Flask.</p>
+        </section>
+
+        <section id="about">
+            <h2>About Our Products</h2>
+            <p>Welcome to our product page! We are dedicated to providing high-quality products to our customers.</p>
+            <p>Our mission is to offer a wide range of products that meet the needs and preferences of our diverse customer base.</p>
+            <h3>Our Product Categories</h3>
+            <p>We offer a variety of products in different categories, including:</p>
+            <ul>
+                <li><strong>Electronics:</strong> From the latest smartphones to high-performance laptops, we have it all.</li>
+                <li><strong>Home Appliances:</strong> Our selection includes everything from refrigerators to washing machines.</li>
+                <li><strong>Fashion:</strong> Discover our trendy and stylish clothing, shoes, and accessories.</li>
+            </ul>
+            <h3>Our Commitment</h3>
+            <p>We believe in:</p>
+            <ul>
+                <li><strong>Quality:</strong> We strive to provide products that are durable and reliable.</li>
+                <li><strong>Customer Satisfaction:</strong> We value our customers and aim to provide excellent service.</li>
+                <li><strong>Innovation:</strong> We are committed to offering the latest and most innovative products.</li>
+            </ul>
+            <p>Thank you for visiting our product page! We hope you find the products you are looking for and enjoy your shopping experience.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>ceemalasai143@gmail.com</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Flask Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show the selected section
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+            let itemLink = document.getElementById('item-link');
+        }
+    </script>
+</body>
+</html>
