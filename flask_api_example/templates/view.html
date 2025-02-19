@@ -1,68 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" href="/favicon.ico" type="image/x-icon">
-        <title>E-commerce </title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-            }
-            header {
-                background: #007BFF;
-                color: white;
-                padding: 10px 20px;
-                text-align: center;
-            }
-            nav ul {
-                list-style-type: none;
-                padding: 0;
-            }
-            nav ul li {
-                display: inline;
-                margin: 0 15px;
-            }
-            nav ul li a {
-                color: #FFFFFF; /* Default link color */
-            }
-            nav ul li a.home {
-                color: #FF0000; /* Red color for Home */
-            }
-            nav ul li a.about {
-                color: #00FF00; /* Green color for About */
-            }
-            nav ul li a.contact {
-                color: #0000FF; /* Blue color for Contact */
-            }
-            section {
-                padding: 20px;
-                display: none; /* Hide all sections by default */
-            }
-            section.active {
-                display: block; /* Show the active section */
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1>Welcome to My Flask Website</h1>
-            <nav>
-                <ul>
-                    <li><a href="/" onclick="showSection('home')">Home</a></li>
-                    <li><a href="/" onclick="showSection('about')">About</a></li>
-                    <li><a href="/" onclick="showSection('contact')">Contact</a></li>
-                    <li><a href="{{ url_for('item') }}">Add item</a></li>
-                    <li><a href="{{ url_for('view') }}">View Item</a></li>
-                </ul>
-            </nav>
-        </header>
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <title>E-commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: #FFFFFF; /* Default link color */
+        }
+        nav ul li a.home {
+            color: #FF0000; /* Red color for Home */
+        }
+        nav ul li a.about {
+            color: #00FF00; /* Green color for About */
+        }
+        nav ul li a.contact {
+            color: #0000FF; /* Blue color for Contact */
+        }
+        .container {
+            display: flex;
+            justify-content: center; /* Center the container */
+            padding: 20px;
+        }
+        table {
+            border-collapse: collapse; /* Collapse borders */
+            width: 80%; /* Set table width */
+        }
+        th, td {
+            border: 1px solid #ddd; /* Add border to cells */
+            padding: 10px; /* Add padding to cells */
+            text-align: center; /* Center text in cells */
+        }
+        th {
+            background-color: #f2f2f2; /* Light gray background for header */
+        }
+        section {
+            padding: 20px;
+            display: none; /* Hide all sections by default */
+        }
+        section.active {
+            display: block; /* Show the active section */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to My Flask Website</h1>
+        <nav>
+            <ul>
+                <li><a href="/" onclick="showSection('home')">Home</a></li>
+                <li><a href="/" onclick="showSection('about')">About</a></li>
+                <li><a href="/" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="{{ url_for('item') }}">Add item</a></li>
+                <li><a href="{{ url_for('view') }}">View Item</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <div class="container">
-        <h1 class="mt-5">Items List</h1>
+        <h1 class="mt-5">Items </h1>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -93,5 +110,33 @@
     <footer>
         <p>&copy; 2025 My Flask Website. All rights reserved.</p>
     </footer>
+    <script>
+        function sortTable(columnIndex) {
+            const table = document.getElementById("itemsTable");
+            const tbody = table.getElementsByTagName("tbody")[0];
+            const rows = Array.from(tbody.rows);
+            const isAscending = table.getAttribute("data-sort-order") === "asc";
+
+            rows.sort((a, b) => {
+                const aText = a.cells[columnIndex].innerText;
+                const bText = b.cells[columnIndex].innerText;
+
+                if (columnIndex === 3) { // Price column
+                    return isAscending ? parseFloat(aText.replace('₹ ', '')) - parseFloat(bText.replace('₹ ', '')) : parseFloat(bText.replace('₹ ', '')) - parseFloat(aText.replace('₹ ', ''));
+                } else {
+                    return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
+                }
+            });
+
+            // Clear the existing rows and append the sorted rows
+            tbody.innerHTML = "";
+            rows.forEach(row => tbody.appendChild(row));
+
+            // Toggle sort order
+            table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+        }
+    </script>
+</body>
+</html>
 </body>
 </html>
