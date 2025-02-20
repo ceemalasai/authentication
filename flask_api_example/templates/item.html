@@ -3,12 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Item Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>E-commerce</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color:white;
+            display: flex;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        header {
+            background: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            width: 100%;
+        }
+        header h1 {
+            margin-bottom:10px; /* Add space below the h1 heading */
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            background: rgb(123, 202, 153);
+            padding: 50px;
+            border-radius: 40px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center; /* Center-align text inside the container */
+            margin-top: 20px;
+        }
+        h2 {
+            margin-bottom: 100px; /* Add some space below the heading */
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-group {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .btn {
+            background-color: #ca67bd;
+            color: rgb(255, 255, 255);
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background-color: #4cae4c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Welcome to My Flask Website</h1>
+        <nav>
+            <ul>
+                <li><a href="/" onclick="showSection('home')">Home</a></li>
+                <li><a href="/" onclick="showSection('about')">About</a></li>
+                <li><a href="/" onclick="showSection('contact')">Contact</a></li>
+                <li><a href="{{ url_for('item') }}">Add item</a></li>
+                <li><a href="{{ url_for('view') }}">View Item</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
+
+            </ul>
+        </nav>
+    </header>
     <div class="container">
-        <h1 class="mt-5">Add New Item</h1>
         <form id="addItemForm">
             <div class="form-group">
                 <label for="name">Name</label>
@@ -30,31 +116,8 @@
         </form>
         <div id="responseMessage" class="mt-3"></div>
     </div>
-
-    <script>
-        document.getElementById('addItemForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the form from submitting the default way
-            const name = document.getElementById('name').value;
-            const category = document.getElementById('category').value;
-            const price = document.getElementById('price').value;
-            const tag = document.getElementById('tag').value;
-
-            fetch('/api/items', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ name, category, price, tag })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('responseMessage').innerText = 'Item added successfully!';
-                document.getElementById('addItemForm').reset(); // Reset the form
-            })
-            .catch(error => {
-                document.getElementById('responseMessage').innerText = 'Error adding item.';
-            });
-        });
-    </script>
+    <footer>
+        <p>&copy; 2025 My Flask Website. All rights reserved.</p>
+    </footer>
 </body>
 </html>

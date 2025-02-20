@@ -17,6 +17,7 @@
             color: white;
             padding: 10px 20px;
             text-align: center;
+            position: relative;
         }
         nav ul {
             list-style-type: none;
@@ -38,6 +39,9 @@
         nav ul li a.contact {
             color: #0000FF; /* Blue color for Contact */
         }
+        .logout {
+            margin-left: auto;
+        }
         section {
             padding: 20px;
             display: none; /* Hide all sections by default */
@@ -45,6 +49,7 @@
         section.active {
             display: block; /* Show the active section */
         }
+
     </style>
 </head>
 <body>
@@ -57,6 +62,7 @@
                 <li><a href="#" onclick="showSection('contact')">Contact</a></li>
                 <li><a href="{{ url_for('item') }}">Add item</a></li>
                 <li><a href="{{ url_for('view') }}">View Item</a></li>
+                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
             </ul>
         </nav>
     </header>
