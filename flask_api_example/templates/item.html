@@ -58,11 +58,11 @@
             width: 100%;
             padding: 10px;
             margin: 5px 0;
-            border: 1px solid #ccc;
+            border: 1px solid #1b0c74;
             border-radius: 5px;
         }
         .btn {
-            background-color: #ca67bd;
+            background-color: #da14bf;
             color: rgb(255, 255, 255);
             border: none;
             padding: 10px;
@@ -71,7 +71,7 @@
             width: 100%;
         }
         .btn:hover {
-            background-color: #4cae4c;
+            background-color: #169216;
         }
         footer {
             text-align: center;
@@ -95,22 +95,23 @@
         </nav>
     </header>
     <div class="container">
-        <form id="addItemForm">
+        <form id="addItemForm" method="POST" action="{{ url_for('item') }}">
+            <h2>Add Item</h2>
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" required>
+                <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="form-group">
                 <label for="category">Category</label>
-                <input type="text" class="form-control" id="category" required>
+                <input type="text" class="form-control" id="category" name="category"required>
             </div>
             <div class="form-group">
                 <label for="price">Price</label>
-                <input type="number" class="form-control" id="price" required>
+                <input type="number" class="form-control" id="price" name="price"required>
             </div>
             <div class="form-group">
                 <label for="tag">Tag</label>
-                <input type="text" class="form-control" id="tag" required>
+                <input type="text" class="form-control" id="tag" name="tag" required>
             </div>
             <button type="submit" class="btn btn-primary">Add Item</button>
         </form>

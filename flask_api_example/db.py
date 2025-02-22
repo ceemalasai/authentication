@@ -44,3 +44,5 @@ def create_product(name: str, category: str, price: float, tag: str):
     db.close()
     return new_product
     
+    
+    

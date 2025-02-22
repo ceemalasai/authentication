@@ -1,5 +1,5 @@
 import secrets
-from flask import Flask, jsonify, request, render_template, redirect
+from flask import Flask, jsonify, request, render_template, redirect, url_for
 from flask_login import LoginManager, login_required, current_user
 from models import db, User
 from mysql_utils import DBHelper
@@ -20,7 +20,7 @@ login_manager.login_view = 'auth.login'  # Redirect to login page if not logged 
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))  # Use session.get() instead of User.query.get()
 
 # Register the auth blueprint
 app.register_blueprint(auth)
@@ -40,10 +40,28 @@ def root():
 def home():
     """Render the home page."""
     return render_template('index.html')
-
-@app.route('/item')
+@app.route('/item', methods=['GET', 'POST'])
 @login_required
 def item():
+    """Render the item page."""
+    if request.method == 'POST':
+        name = request.form.get('name')
+        category = request.form.get('category')
+        price = request.form.get('price')
+        tag = request.form.get('tag')
+        print(f"Received data - Name: {name}, Category: {category}, Price: {price}, Tag: {tag}")
+
+        if name and category and price and tag:
+            query = "INSERT INTO products (name, category, price, tag) VALUES (%s, %s, %s, %s)"
+            params = (name, category, price, tag)
+            try:
+                db_helper.insert_record(query, params)
+                return jsonify({'message': 'Item added successfully'}), 201
+            except Exception as e:
+                return jsonify({'error': str(e)}), 500
+        else:
+            return jsonify({'error': 'Missing data'}), 400
+
     return render_template('item.html')
 
 @app.route('/view')
@@ -52,6 +70,7 @@ def view():
     """Render the view page."""
     items = db_helper.fetch_results("SELECT * FROM products")  # Fetch items from the database
     return render_template('view.html', items=items)
+
 
 # API routes...
 

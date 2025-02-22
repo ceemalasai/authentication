@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <title>E-commerce</title>
+    <title>View Items</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
+        /* Add your existing styles here */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: white; /* Example background color */
+            background-color: white;
         }
         header {
             background: #007BFF;
@@ -19,78 +20,48 @@
             padding: 10px 20px;
             text-align: center;
         }
-        nav ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        nav ul li {
-            display: inline;
-            margin: 0 15px;
-        }
-        nav ul li a {
-            color: #FFFFFF; /* Default link color */
-        }
-        nav ul li a.home {
-            color: #FF0000; /* Red color for Home */
-        }
-        nav ul li a.about {
-            color: #00FF00; /* Green color for About */
-        }
-        nav ul li a.contact {
-            color: #0000FF; /* Blue color for Contact */
-        }
         .container {
             display: flex;
-            justify-content: center; /* Center the container */
+            flex-direction: column;
+            align-items: center;
             padding: 20px;
         }
         table {
-            border-collapse: collapse; /* Collapse borders */
-            width: 80%; /* Set table width */
+            border-collapse: collapse;
+            width: 80%;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #ddd; /* Add border to cells */
-            padding: 10px; /* Add padding to cells */
-            text-align: center; /* Center text in cells */
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
         }
         th {
-            background-color: #f2f2f2; /* Light gray background for header */
+            background-color: #f2f2f2;
+            cursor: pointer;
         }
-        section {
-            padding: 20px;
-            display: none; /* Hide all sections by default */
-        }
-        section.active {
-            display: block; /* Show the active section */
+        .search-container {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Welcome to My Flask Website</h1>
-        <nav>
-            <ul>
-                <li><a href="/" onclick="showSection('home')">Home</a></li>
-                <li><a href="/" onclick="showSection('about')">About</a></li>
-                <li><a href="/" onclick="showSection('contact')">Contact</a></li>
-                <li><a href="{{ url_for('item') }}">Add item</a></li>
-                <li><a href="{{ url_for('view') }}">View Item</a></li>
-                <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
-
-            </ul>
-        </nav>
+        <h1>View Items</h1>
     </header>
 
     <div class="container">
-        <h1 class="mt-5">Items </h1>
-        <table class="table table-bordered">
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search for items..." onkeyup="searchItems()">
+        </div>
+        <table id="itemsTable" data-sort-order="asc">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Price</th>
-                    <th>Tag</th>
+                    <th onclick="sortTable(0)">ID</th>
+                    <th onclick="sortTable(1)">Name</th>
+                    <th onclick="sortTable(2)">Category</th>
+                    <th onclick="sortTable(3)">Price</th>
+                    <th onclick="sortTable(4)">Tag</th>
                 </tr>
             </thead>
             <tbody>
@@ -110,10 +81,34 @@
             </tbody>
         </table>
     </div>
-    <footer>
-        <p>&copy; 2025 My Flask Website. All rights reserved.</p>
-    </footer>
+
     <script>
+        function searchItems() {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById("itemsTable");
+            const tbody = table.getElementsByTagName("tbody")[0];
+            const rows = tbody.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                const cells = rows[i].getElementsByTagName("td");
+                let rowVisible = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = cells[j];
+                    if (cell) {
+                        const cellText = cell.textContent || cell.innerText;
+                        if (cellText.toLowerCase().indexOf(filter) > -1) {
+                            rowVisible = true;
+                            break; // No need to check other cells if one matches
+                        }
+                    }
+                }
+
+                rows[i].style.display = rowVisible ? "" : "none"; // Show or hide the row
+            }
+        }
+
         function sortTable(columnIndex) {
             const table = document.getElementById("itemsTable");
             const tbody = table.getElementsByTagName("tbody")[0];
@@ -121,11 +116,13 @@
             const isAscending = table.getAttribute("data-sort-order") === "asc";
 
             rows.sort((a, b) => {
-                const aText = a.cells[columnIndex].innerText;
-                const bText = b.cells[columnIndex].innerText;
+                const aText = a.cells[columnIndex].innerText .trim();
+                const bText = b.cells[columnIndex].innerText.trim();
 
                 if (columnIndex === 3) { // Price column
-                    return isAscending ? parseFloat(aText.replace('₹ ', '')) - parseFloat(bText.replace('₹ ', '')) : parseFloat(bText.replace('₹ ', '')) - parseFloat(aText.replace('₹ ', ''));
+                    const aPrice = parseFloat(aText.replace('₹ ', '').replace(',', ''));
+                    const bPrice = parseFloat(bText.replace('₹ ', '').replace(',', ''));
+                    return isAscending ? aPrice - bPrice : bPrice - aPrice;
                 } else {
                     return isAscending ? aText.localeCompare(bText) : bText.localeCompare(aText);
                 }
@@ -139,7 +136,5 @@
             table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
         }
     </script>
-</body>
-</html>
 </body>
 </html>
