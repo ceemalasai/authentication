@@ -56,13 +56,25 @@ def item():
             params = (name, category, price, tag)
             try:
                 db_helper.insert_record(query, params)
-                return jsonify({'message': 'Item added successfully'}), 201
+                message ="item added successfully"
             except Exception as e:
-                return jsonify({'error': str(e)}), 500
+                message = f"Error:{str(e)}"
         else:
-            return jsonify({'error': 'Missing data'}), 400
+            message = "missing required fields"
 
     return render_template('item.html')
+@app.route('/delete_item/<int:item_id>', methods=['POST'])
+@login_required
+def delete_item(item_id):
+    """Delete an item from the database."""
+    query = "DELETE FROM products WHERE id = %s"
+    params = (item_id,)
+    try:
+        db_helper.insert_record(query, params)
+        message = 'Item deleted successfully'
+    except Exception as e:
+        message = f'Error: {str(e)}'
+    return redirect(url_for('item'))
 
 @app.route('/view')
 @login_required

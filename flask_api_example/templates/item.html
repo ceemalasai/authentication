@@ -96,7 +96,6 @@
     </header>
     <div class="container">
         <form id="addItemForm" method="POST" action="{{ url_for('item') }}">
-            <h2>Add Item</h2>
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
@@ -116,6 +115,16 @@
             <button type="submit" class="btn btn-primary">Add Item</button>
         </form>
         <div id="responseMessage" class="mt-3"></div>
+        <ul>
+            {% for item in items %}
+                <li>
+                    {{ item.name }} - {{ item.category }} - {{ item.price }} - {{ item.tag }}
+                    <form method="POST" action="{{ url_for('delete_item', item_id=item.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
     <footer>
         <p>&copy; 2025 My Flask Website. All rights reserved.</p>
