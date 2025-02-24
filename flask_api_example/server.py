@@ -63,19 +63,6 @@ def item():
             message = "missing required fields"
 
     return render_template('item.html')
-@app.route('/delete_item/<int:item_id>', methods=['POST'])
-@login_required
-def delete_item(item_id):
-    """Delete an item from the database."""
-    query = "DELETE FROM products WHERE id = %s"
-    params = (item_id,)
-    try:
-        db_helper.insert_record(query, params)
-        message = 'Item deleted successfully'
-    except Exception as e:
-        message = f'Error: {str(e)}'
-    return redirect(url_for('item'))
-
 @app.route('/view')
 @login_required
 def view():
