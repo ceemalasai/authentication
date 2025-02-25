@@ -1,5 +1,5 @@
 import secrets
-from flask import Flask, jsonify, request, render_template, redirect, url_for
+from flask import Flask, jsonify, request, render_template, redirect, url_for, send_from_directory
 from flask_login import LoginManager, login_required, current_user
 from models import db, User
 from mysql_utils import DBHelper
@@ -28,6 +28,13 @@ app.register_blueprint(auth)
 # Initialize the database helper instance
 db_helper = DBHelper(host='localhost', user='fastserver', password='Kishore123$', database='products')
 db_helper.init_db_connection()
+@app.route('/static/style.css')
+def serve_css():
+    response =send_from_directory('static', 'style.css')
+    response.headers['Cache-Control']='no-store, no-cache, must-revalidate, max-age=0'
+    response.headers['Pragma']='no-cache'
+    response.headers['Expires']='0'
+    return response
 
 @app.route('/')
 @login_required
