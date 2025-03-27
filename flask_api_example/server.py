@@ -1,15 +1,16 @@
 import secrets
-from flask import Flask, jsonify, request, render_template, redirect, url_for, send_from_directory
+from flask import Flask, jsonify, request, render_template, redirect, url_for, send_from_directory, flash
 from flask_login import LoginManager, login_required, current_user
 from models import db, User
 from mysql_utils import DBHelper
 from auth_routes import auth
 import os
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 
 # Configure Flask app
-app.config['SECRET_KEY'] = secrets.token_hex(16)  # Generates a new key each time
+app.config['SECRET_KEY'] = 'a38ed1b1369a27a3be1122ab49ce9723'  # Generates a new key each time
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'mysql://fastserver:Kishore123%24@localhost/products')
 db.init_app(app)
 
