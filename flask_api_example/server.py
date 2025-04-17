@@ -68,7 +68,7 @@ def item():
             except Exception as e:
                 message = f"Error:{str(e)}"
         else:
-            message = "missing required fields"
+            message = "missing required fields"  
 
     return render_template('item.html')
 @app.route('/view')
