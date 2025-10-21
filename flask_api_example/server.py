@@ -8,6 +8,8 @@ import os
 from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
+app.secret_key = "my_super_secret_key"  # must stay the same every run
+
 
 # Configure Flask app
 app.config['SECRET_KEY'] = 'a38ed1b1369a27a3be1122ab49ce9723'  # Generates a new key each time
