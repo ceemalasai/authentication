@@ -5,6 +5,12 @@ from sqlalchemy.orm import sessionmaker,declarative_base
 # 1. Load the .env file
 load_dotenv()
 
+# 2. Get the FULL URL directly from .env
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# Check if it loaded correctly (optional debug print)
+if not DATABASE_URL:
+    raise ValueError("DATABASE_URL not found. Make sure .env is in the same folder.")
 # Update the DATABASE_URL with your actual username and password
 DATABASE_URL = f"mysql+pymysql://{user}:{password}@{host}/{dbname}"
 
