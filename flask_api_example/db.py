@@ -1,10 +1,12 @@
 from fastapi import FastAPI
-
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, String, Numeric
 from sqlalchemy.orm import sessionmaker,declarative_base
+# 1. Load the .env file
+load_dotenv()
 
 # Update the DATABASE_URL with your actual username and password
-DATABASE_URL = "mysql://fastserver:Kishore123$@localhost/products"
+DATABASE_URL = f"mysql+pymysql://{user}:{password}@{host}/{dbname}"
 
 # Create the SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
