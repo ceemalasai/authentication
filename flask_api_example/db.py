@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from sqlalchemy import create_engine, Column, Integer, String, Numeric
@@ -11,8 +12,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 # Check if it loaded correctly (optional debug print)
 if not DATABASE_URL:
     raise ValueError("DATABASE_URL not found. Make sure .env is in the same folder.")
-# Update the DATABASE_URL with your actual username and password
-DATABASE_URL = f"mysql+pymysql://{user}:{password}@{host}/{dbname}"
 
 # Create the SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
